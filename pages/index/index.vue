@@ -1,30 +1,16 @@
 <template>
-	<view class="container">
-		<text class="left">left</text>
-		<text class="center">center</text>
-		<text class="right">right</text>
+	<view class="home-container">
+		<NavBar></NavBar>
+		<view v-for="item in 100" :key="item">
+			{{item}}
+		</view>
 	</view>
 </template>
 
 <script>
-	export default {
-		data() {
-			return {
-				title: 'Hello'
-			}
-		},
-		onLoad() {
 
-		},
-		methods: {
-
-		}
-	}
 </script>
 
 <style lang="scss" scoped>
-	.container {
-		@include flex(flex-start,column);
-		color: $base-color;
-	}
+
 </style>
