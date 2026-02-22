@@ -1,14 +1,43 @@
 <template>
 	<view class="home-container">
 		<NavBar></NavBar>
-		<view v-for="item in 100" :key="item">
-			{{item}}
-		</view>
+		<!-- 添加侧边栏 -->
+		<TabBar :labelList="labelList"></TabBar>
 	</view>
 </template>
 
-<script>
+<script setup>
+	import {
+		ref
+	} from 'vue'
+	import {
+		onLoad
+	} from '@dcloudio/uni-app'
 
+	const labelList = ref([])
+
+	function initLabelList() {
+		uniCloud.callFunction({
+			name: "get_label_list",
+			success: (res) => {
+				const {
+					result: {
+						code,
+						data
+					}
+				} = res
+				if (code === 1) {
+					labelList.value = data || []
+				} else {
+					labelList.value = []
+				}
+			}
+		})
+	}
+
+	onLoad(() => {
+		initLabelList()
+	})
 </script>
 
 <style lang="scss" scoped>

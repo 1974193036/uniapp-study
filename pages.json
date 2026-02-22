@@ -26,6 +26,12 @@
 				"navigationBarTitleText": "搜索",
 				"enablePullDownRefresh": false
 			}
+		},
+		{
+			"path": "pages/labelAdmin/labelAdmin",
+			"style": {
+				"navigationBarTitleText": "标签管理"
+			}
 		}
 	],
 	"globalStyle": {
