@@ -1,6 +1,6 @@
 <template>
 	<view class="tab">
-		<scroll-view class="tab-scroll" :scroll-into-view="currentId" scroll-x="true">
+		<scroll-view class="tab-scroll" :scroll-into-view="currentId" :scroll-with-animation="true" scroll-x="true">
 			<view class="tab-scroll-box">
 				<view @click="navClickFn(index)" :class="{active: activeIndex === index}" v-for="(item, index) in labelList"
 					:key="index" :id="`prefixId${index}`" class="tab-scroll-item">
@@ -16,23 +16,31 @@
 
 <script setup>
 	import {
-		ref
+		ref,
+		watch
 	} from 'vue'
 	
-	const activeIndex = ref(0)
 	const currentId = ref(null)
 	const prefixId = 'tab-scroll-item-'
 
-	defineProps({
+	const emit = defineEmits(['changeCurrentIndex'])
+	const props = defineProps({
 		labelList: {
 			type: Array,
 			default: () => []
 		},
+		activeIndex: {
+			type: Number,
+			default: 0
+		}
+	})
+	
+	watch(() => props.activeIndex, index => {
+		currentId.value = `prefixId${index}`
 	})
 
 	function navClickFn(index) {
-		activeIndex.value = index
-		currentId.value = `prefixId${index}`
+		emit('changeCurrentIndex', index)
 	}
 
 	function goLabelAdmin() {
