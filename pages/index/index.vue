@@ -8,31 +8,19 @@
 
 <script setup>
 	import {
-		ref
+		ref,
+		getCurrentInstance
 	} from 'vue'
 	import {
 		onLoad
 	} from '@dcloudio/uni-app'
 
 	const labelList = ref([])
+	const { proxy } = getCurrentInstance()
 
-	function initLabelList() {
-		uniCloud.callFunction({
-			name: "get_label_list",
-			success: (res) => {
-				const {
-					result: {
-						code,
-						data
-					}
-				} = res
-				if (code === 1) {
-					labelList.value = data || []
-				} else {
-					labelList.value = []
-				}
-			}
-		})
+	async function initLabelList() {
+		const list = await proxy.$http.get_label_list()
+		labelList.value = list || []
 	}
 
 	onLoad(() => {

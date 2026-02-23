@@ -11,6 +11,7 @@ exports.main = async (event, context) => {
 	//返回数据给客户端
 	return {
 		code: 1,
-		data: res.data || []
+		data: res.data || [],
+		msg: '成功'
 	}
 };
