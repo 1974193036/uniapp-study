@@ -3,7 +3,6 @@
 		<swiper-item v-for="(item,index) in labelList" :key="index">
 			<view class="swiper-item">
 				<ListItem></ListItem>
-				{{ item.name }}
 			</view>
 		</swiper-item>
 	</swiper>
@@ -11,8 +10,6 @@
 
 <script setup>
 	import ListItem from './ListItem.vue'
-	
-	console.log(ListItem)
 
 	const emit = defineEmits(['changeCurrentIndex'])
 	defineProps({
@@ -35,7 +32,12 @@
 </script>
 
 <style lang="scss" scoped>
-.swiper-container {
-	height: 100%;
-}
+	.swiper-container {
+		height: 100%;
+
+		.swiper-item {
+			height: 100%;
+			overflow: hidden;
+		}
+	}
 </style>
