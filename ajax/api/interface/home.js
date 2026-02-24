@@ -9,5 +9,8 @@ export const get_label_list = data => ajax({
 /* 获取文章列表 */
 export const get_article_list = data => ajax({
 	name:"get_article_list",
-	data
+	data,
+	options: {
+		showLoading: false
+	}
 })

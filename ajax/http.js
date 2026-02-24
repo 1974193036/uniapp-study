@@ -1,9 +1,11 @@
 export default ({
 	name,
-	data = {}
+	data = {},
+	options = {},
 }) => {
+	const loading = options.showLoading === true || options.showLoading === undefined
 	return new Promise((resolve, reject) => {
-		uni.showLoading({})
+		loading && uni.showLoading({})
 		uniCloud.callFunction({
 			name,
 			data,
@@ -23,7 +25,7 @@ export default ({
 				reject(err)
 			},
 			complete() {
-				uni.hideLoading()
+				loading && uni.hideLoading()
 			}
 		})
 	})

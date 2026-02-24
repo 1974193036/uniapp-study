@@ -6,7 +6,9 @@ exports.main = async (event, context) => {
 	// console.log('event : ', event)
 
 	const {
-		classify
+		classify,
+		page = 1,
+		pageSize = 10
 	} = event
 
 	let matchObj = {}
@@ -24,12 +26,19 @@ exports.main = async (event, context) => {
 		.project({
 			content: 0 // 本次查询不需要返回文章详情给前端
 		})
+		.skip(pageSize * (page - 1)) // 首页从0开始计算
+		.limit(pageSize) // 每页最多返回多少条数据
 		.end()
+		
+	const amount = await collection.where(matchObj).count()	
 
 	//返回数据给客户端
 	return {
 		code: 1,
-		data: res.data || [],
+		data: {
+			list: res.data || [],
+			total: amount.total || 0,
+		},
 		msg: '成功'
 	}
 };

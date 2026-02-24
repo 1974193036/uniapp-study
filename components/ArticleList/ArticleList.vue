@@ -2,7 +2,8 @@
 	<swiper class="swiper-container" :current="activeIndex" @change="changeCurrentIndex">
 		<swiper-item v-for="(item,index) in labelList" :key="item._id">
 			<view class="swiper-item">
-				<ListItem :articleList="articleData[index] || []"></ListItem>
+				<ListItem :articleList="articleData[index] || []" :loadData="loadData[index]" :pageSize="pageSize" @loadmore="loadmoreData">
+				</ListItem>
 			</view>
 		</swiper-item>
 	</swiper>
@@ -32,7 +33,10 @@
 		getArticleList(props.activeIndex)
 	})
 
+	const loadData = ref({})
+	const pageSize = ref(7)
 	const articleData = ref({})
+
 	function changeCurrentIndex(e) {
 		const {
 			current
@@ -48,10 +52,46 @@
 	} = getCurrentInstance()
 
 	async function getArticleList(currentIndex) {
-		const articleList = await proxy.$http.get_article_list({
-			classify: props.labelList[currentIndex].name
+		/* 初始化请求判断当前分类是否含有数据，并记录当前的分类页数 */
+		if (!loadData.value[currentIndex]) {
+			loadData.value[currentIndex] = {
+				page: 1,
+				loading: 'loading',
+				total: 0
+			}
+		}
+
+		const {
+			list,
+			total
+		} = await proxy.$http.get_article_list({
+			classify: props.labelList[currentIndex].name,
+			page: loadData.value[currentIndex].page,
+			pageSize: pageSize.value,
 		})
-		articleData.value[currentIndex] = articleList || []
+
+		// 填充数据时改变为追加数据
+		const oldList = articleData.value[currentIndex] || []
+		oldList.push(...list)
+		loadData.value[currentIndex].total = total
+		articleData.value[currentIndex] = oldList
+	}
+
+	function loadmoreData() {
+		console.log('到底了')
+		// 当现在没有数据的时候，不再进行数据的请求
+		if (loadData.value[props.activeIndex].total === articleData.value[props.activeIndex].length) {
+			loadData.value[props.activeIndex] = {
+				...loadData.value[props.activeIndex],
+				...{
+					loading: "noMore",
+					page: loadData.value[props.activeIndex].page
+				}
+			}
+			return
+		}
+		loadData.value[props.activeIndex].page++
+		getArticleList(props.activeIndex)
 	}
 </script>
 
