@@ -32,6 +32,13 @@
 			"style": {
 				"navigationBarTitleText": "标签管理"
 			}
+		},
+		{
+			"path": "pages/userInfo/login/login",
+			"style": {
+				"navigationBarTitleText": "用户登录",
+				"enablePullDownRefresh": false
+			}
 		}
 	],
 	"globalStyle": {

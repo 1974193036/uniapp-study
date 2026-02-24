@@ -1,7 +1,7 @@
 <template>
 	<view>
 		<!-- 基础卡片 -->
-		<view class="list-card" v-if="item.mode==='base'">
+		<view class="list-card" v-if="item.mode==='base'" @click="goArticleDetail">
 			<view class="list-card-img">
 				<image :src="item.cover[0] ? item.cover[0] : '/static/img/logo.png'"
 					mode="aspectFill"></image>
@@ -22,7 +22,7 @@
 			</view>
 		</view>
 		<!-- 多图模式 -->
-		<view class="list-card mode-column" v-if="item.mode==='column'">
+		<view class="list-card mode-column" v-if="item.mode==='column'" @click="goArticleDetail">
 			<view class="list-card-top">
 				<text>{{ item.title }}</text>
 				<SaveLikes></SaveLikes>
@@ -44,7 +44,7 @@
 			</view>
 		</view>
 		<!-- 大图模式 -->
-		<view class="list-card mode-image" v-if="item.mode==='image'">
+		<view class="list-card mode-image" v-if="item.mode==='image'" @click="goArticleDetail">
 			<view class="list-card-top">
 				<view class="image-container">
 					<image :src="item.cover[0]"></image>
@@ -73,6 +73,10 @@
 			default: () => ({})
 		},
 	})
+	
+	function goArticleDetail() {
+		console.log('goArticleDetail')
+	}
 </script>
 
 <style lang="scss" scoped>
