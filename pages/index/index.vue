@@ -31,7 +31,9 @@
 
 	async function initLabelList() {
 		const list = await proxy.$http.get_label_list()
-		labelList.value = list || []
+		labelList.value = [{
+			name: "全部"
+		}, ...(list || [])]
 	}
 
 	onLoad(() => {
@@ -44,14 +46,15 @@
 		height: 100%;
 		display: flex;
 	}
+
 	.home-container {
 		overflow: hidden;
-		flex:1;
+		flex: 1;
 		box-sizing: border-box;
-		@include flex(flex-start,column);
+		@include flex(flex-start, column);
 		align-items: inherit;
 	}
-	
+
 	.list-container {
 		flex: 1;
 		box-sizing: border-box;

@@ -1,18 +1,23 @@
 <template>
 	<swiper class="swiper-container" :current="activeIndex" @change="changeCurrentIndex">
-		<swiper-item v-for="(item,index) in labelList" :key="index">
+		<swiper-item v-for="(item,index) in labelList" :key="item._id">
 			<view class="swiper-item">
-				<ListItem></ListItem>
+				<ListItem :articleList="articleData[index] || []"></ListItem>
 			</view>
 		</swiper-item>
 	</swiper>
 </template>
 
 <script setup>
+	import {
+		watch,
+		ref,
+		getCurrentInstance
+	} from 'vue'
 	import ListItem from './ListItem.vue'
 
 	const emit = defineEmits(['changeCurrentIndex'])
-	defineProps({
+	const props = defineProps({
 		labelList: {
 			type: Array,
 			default: () => []
@@ -23,11 +28,30 @@
 		}
 	})
 
+	watch(() => props.labelList, () => {
+		getArticleList(props.activeIndex)
+	})
+
+	const articleData = ref({})
 	function changeCurrentIndex(e) {
 		const {
 			current
 		} = e.detail;
 		emit('changeCurrentIndex', current)
+		if (!articleData.value[current] || articleData.value[current].length == 0) {
+			getArticleList(current)
+		}
+	}
+
+	const {
+		proxy
+	} = getCurrentInstance()
+
+	async function getArticleList(currentIndex) {
+		const articleList = await proxy.$http.get_article_list({
+			classify: props.labelList[currentIndex].name
+		})
+		articleData.value[currentIndex] = articleList || []
 	}
 </script>
 
