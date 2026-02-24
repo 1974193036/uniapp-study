@@ -4,9 +4,7 @@
 			<view class="list-card-container">
 				<ListCard v-for="(item, index) in articleList" :key="item._id" :item="item"></ListCard>
 			</view>
-			<uni-load-more v-if="articleList.length === 0 || articleList.length > pageSize"
-				:status="loadData.loading || 'loading'"></uni-load-more>
-			<view v-else style="padding-bottom: 20rpx;"></view>
+			<uni-load-more :status="loadData.loading || 'loading'" :contentText="contentText"></uni-load-more>
 		</scroll-view>
 	</view>
 </template>
@@ -28,11 +26,17 @@
 				loading: 'loading'
 			})
 		},
-		pageSize: {
-			type: Number,
-			default: 7
-		}
+		// pageSize: {
+		// 	type: Number,
+		// 	default: 7
+		// }
 	})
+
+	const contentText = {
+		contentdown: ' ',
+		contentrefresh: '正在加载...',
+		contentnomore: '没有更多数据了'
+	}
 
 	function loadmore() {
 		emit('loadmore')

@@ -74,6 +74,7 @@
 		const oldList = articleData.value[currentIndex] || []
 		oldList.push(...list)
 		loadData.value[currentIndex].total = total
+		loadData.value[currentIndex].loading = 'more'
 		articleData.value[currentIndex] = oldList
 	}
 
@@ -91,6 +92,7 @@
 			return
 		}
 		loadData.value[props.activeIndex].page++
+		loadData.value[props.activeIndex].loading = 'loading'
 		getArticleList(props.activeIndex)
 	}
 </script>
