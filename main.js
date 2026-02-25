@@ -1,4 +1,5 @@
 import App from './App'
+import { createPinia } from 'pinia'
 
 // #ifndef VUE3
 import Vue from 'vue'
@@ -18,6 +19,8 @@ import { createSSRApp } from 'vue'
 import module from './ajax/api/index.js'
 export function createApp() {
   const app = createSSRApp(App)
+	const pinia = createPinia()
+	app.use(pinia)
 	app.config.globalProperties.$http = module
   return {
     app

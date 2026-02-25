@@ -60,6 +60,14 @@
 	font-size: 32rpx;
 }
 
+/* 使用uni-easyinput 进行bug修复 */
+:deep(.uni-easyinput__content-input) {
+  padding-left: 0 !important;
+}
+
+:deep(.uni-easyinput__placeholder-class) {
+	font-size: 32rpx;
+}
 
 .placeholder {
 	color: #999;
