@@ -1,6 +1,7 @@
 // stores/user.js
 import {
-	ref
+	ref,
+	computed
 } from 'vue'
 import {
 	defineStore
@@ -12,6 +13,7 @@ const defaultUserInfo = {
 	loginName: '',
 	phone: '',
 	avatar: '',
+	article_likes_ids: []
 }
 
 export const useUserStore = defineStore('user', () => {
@@ -38,11 +40,25 @@ export const useUserStore = defineStore('user', () => {
 		uni.removeStorageSync('userInfo')
 	}
 
+	// 校验是否已经登录
+	const checkedIsLogin = () => {
+		return new Promise(resolve => {
+			if (userInfo.value && userInfo.value.id) {
+				resolve()
+			} else {
+				uni.navigateTo({
+					url: '/pages/userInfo/login/login'
+				})
+			}
+		})
+	}
+
 	return {
 		// State
 		userInfo,
 		// Actions
 		updateUserInfo,
-		reset
+		reset,
+		checkedIsLogin
 	}
 })

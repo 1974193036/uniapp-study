@@ -83,7 +83,7 @@
 			]
 		}
 	}
-	console.log(formRules)
+	// console.log(formRules)
 
 	const formData = ref({
 		loginName: '',
@@ -112,7 +112,7 @@
 	} = getCurrentInstance()
 	async function sendUserInfo(data) {
 		const userInfo = await proxy.$http.user_login(data)
-		console.log(userInfo)
+		// console.log(userInfo)
 		if (userInfo) {
 			userStore.updateUserInfo(userInfo)
 			uni.showToast({

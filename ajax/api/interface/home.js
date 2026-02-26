@@ -14,3 +14,9 @@ export const get_article_list = data => ajax({
 		showLoading: false
 	}
 })
+
+/* 修改收藏状态 */
+export const update_save_like = data => ajax({
+  name: 'update_save_like',
+  data
+})
