@@ -2,7 +2,8 @@
 	<swiper class="swiper-container" :current="activeIndex" @change="changeCurrentIndex">
 		<swiper-item v-for="(item,index) in labelList" :key="item._id">
 			<view class="swiper-item">
-				<ListItem :articleList="articleData[index] || []" :loadData="loadData[index]" :pageSize="pageSize" @loadmore="loadmoreData">
+				<ListItem :articleList="articleData[index] || []" :loadData="loadData[index]" :pageSize="pageSize"
+					@loadmore="loadmoreData">
 				</ListItem>
 			</view>
 		</swiper-item>
@@ -28,13 +29,18 @@
 		}
 	})
 
-	watch(() => props.labelList, () => {
-		getArticleList(props.activeIndex)
-	})
-
 	const loadData = ref({})
 	const pageSize = ref(7)
 	const articleData = ref({})
+	const {
+		proxy
+	} = getCurrentInstance()
+
+	watch(() => props.labelList, (val) => {
+		val.length > 0 && getArticleList(props.activeIndex)
+	}, {
+		immediate: true
+	})
 
 	function changeCurrentIndex(e) {
 		const {
@@ -45,10 +51,6 @@
 			getArticleList(current)
 		}
 	}
-
-	const {
-		proxy
-	} = getCurrentInstance()
 
 	async function getArticleList(currentIndex) {
 		/* 初始化请求判断当前分类是否含有数据，并记录当前的分类页数 */

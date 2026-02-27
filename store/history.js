@@ -1,4 +1,3 @@
-// stores/user.js
 import {
 	ref,
 	computed
@@ -6,15 +5,6 @@ import {
 import {
 	defineStore
 } from 'pinia'
-
-// 默认用户信息结构
-const defaultUserInfo = {
-	id: '',
-	loginName: '',
-	phone: '',
-	avatar: '',
-	article_likes_ids: []
-}
 
 export const useHistoryStore = defineStore('history', () => {
 	// State - 使用 ref 定义响应式数据

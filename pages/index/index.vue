@@ -12,11 +12,31 @@
 <script setup>
 	import {
 		ref,
-		getCurrentInstance
+		getCurrentInstance,
+		computed
 	} from 'vue'
 	import {
 		onLoad
 	} from '@dcloudio/uni-app'
+	import {
+		useLabelStore
+	} from '@/store/label.js'
+	import {
+		useUserStore
+	} from '@/store/user.js'
+	import {
+		storeToRefs
+	} from 'pinia'
+
+	const labelStore = useLabelStore()
+	const {
+		labelList: labelListStore
+	} = storeToRefs(labelStore)
+
+	const userStore = useUserStore()
+	const {
+		userInfo
+	} = storeToRefs(userStore)
 
 	const activeIndex = ref(0)
 
@@ -24,16 +44,29 @@
 		activeIndex.value = index
 	}
 
-	const labelList = ref([])
+	const labelList = computed(() => {
+		if (userInfo.value && userInfo.value.id) {
+			activeIndex.value = 0
+			return [
+				...labelListStore.value.slice(0, 1),
+				...labelListStore.value.filter(item => userInfo.value
+					.label_ids.includes(item._id))
+			]
+		} else {
+			return labelListStore.value
+		}
+	})
+
 	const {
 		proxy
 	} = getCurrentInstance()
 
 	async function initLabelList() {
+		if (labelList.value.length > 0) return
 		const list = await proxy.$http.get_label_list()
-		labelList.value = [{
+		labelStore.setLabelList([{
 			name: "全部"
-		}, ...(list || [])]
+		}, ...(list || [])])
 	}
 
 	onLoad(() => {

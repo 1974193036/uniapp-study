@@ -26,3 +26,9 @@ export const get_search_data = data => ajax({
   name:'get_search_data',
   data
 })
+
+/* 修改当前显示标签 */
+export const update_label_ids = data => ajax({
+  name:'update_label_ids',
+  data
+})

@@ -19,6 +19,11 @@
 		ref,
 		watch
 	} from 'vue'
+	import {
+		useUserStore
+	} from '@/store/user'
+	
+	const userStore = useUserStore()
 	
 	const currentId = ref(null)
 	const prefixId = 'tab-scroll-item-'
@@ -43,7 +48,8 @@
 		emit('changeCurrentIndex', index)
 	}
 
-	function goLabelAdmin() {
+	async function goLabelAdmin() {
+		await userStore.checkedIsLogin()
 		uni.navigateTo({
 			url: "/pages/labelAdmin/labelAdmin"
 		})

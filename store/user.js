@@ -13,7 +13,8 @@ const defaultUserInfo = {
 	loginName: '',
 	phone: '',
 	avatar: '',
-	article_likes_ids: []
+	article_likes_ids: [],
+	label_ids: [],
 }
 
 export const useUserStore = defineStore('user', () => {

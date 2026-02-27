@@ -120,7 +120,14 @@
 				icon: 'none',
 			})
 			setTimeout(() => {
+				// #ifdef H5
+				uni.switchTab({
+					url: '/pages/index/index'
+				})
+				// #endif
+				// #ifndef H5
 				uni.navigateBack()
+				// #endif
 			}, 1500)
 		}
 	}
