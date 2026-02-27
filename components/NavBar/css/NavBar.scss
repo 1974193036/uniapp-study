@@ -23,4 +23,19 @@
             margin-left: 20rpx;
         }
     }
+		
+		/* 搜索界面单独添加样式 */
+		.return-icon {
+		  position: absolute;
+		  left: 0;
+		  top: 50%;
+		  height: 60rpx;
+		  @include flex(center);
+		}
+		.search-input {
+		  font-size: 28rpx;
+		  color: #999;
+		  width: 100%;
+			text-indent: 20rpx;
+		}
 }

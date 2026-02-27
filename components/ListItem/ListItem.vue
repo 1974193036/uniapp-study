@@ -2,9 +2,10 @@
 	<view class="list-scroll-container">
 		<scroll-view scroll-y="true" class="list-scroll" @scrolltolower="loadmore">
 			<view class="list-card-container">
-				<ListCard v-for="(item, index) in articleList" :key="item._id" :item="item"></ListCard>
+				<ListCard v-for="(item, index) in articleList" :key="item._id" :item="item" @saveHistory="saveHistory"></ListCard>
 			</view>
-			<uni-load-more :status="loadData.loading || 'loading'" :contentText="contentText"></uni-load-more>
+			<uni-load-more v-if="isShowLoading" :status="loadData.loading || 'loading'"
+				:contentText="contentText"></uni-load-more>
 		</scroll-view>
 	</view>
 </template>
@@ -14,7 +15,7 @@
 		ref
 	} from 'vue'
 
-	const emit = defineEmits(['loadmore'])
+	const emit = defineEmits(['loadmore', 'saveHistory'])
 	const props = defineProps({
 		articleList: {
 			type: Array,
@@ -26,6 +27,10 @@
 				loading: 'loading'
 			})
 		},
+		isShowLoading: {
+			type: Boolean,
+			default: true
+		}
 		// pageSize: {
 		// 	type: Number,
 		// 	default: 7
@@ -40,6 +45,10 @@
 
 	function loadmore() {
 		emit('loadmore')
+	}
+	
+	function saveHistory() {
+		emit('saveHistory')
 	}
 </script>
 

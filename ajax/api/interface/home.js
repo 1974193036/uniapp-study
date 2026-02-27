@@ -20,3 +20,9 @@ export const update_save_like = data => ajax({
   name: 'update_save_like',
   data
 })
+
+/* 获取搜索内容 */
+export const get_search_data = data => ajax({
+  name:'get_search_data',
+  data
+})

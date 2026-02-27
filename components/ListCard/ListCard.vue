@@ -73,9 +73,11 @@
 			default: () => ({})
 		},
 	})
+	const emit = defineEmits(['saveHistory'])
 	
 	function goArticleDetail() {
 		console.log('goArticleDetail')
+		emit('saveHistory')
 	}
 </script>
 

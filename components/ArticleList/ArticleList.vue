@@ -15,7 +15,6 @@
 		ref,
 		getCurrentInstance
 	} from 'vue'
-	import ListItem from './ListItem.vue'
 
 	const emit = defineEmits(['changeCurrentIndex'])
 	const props = defineProps({
