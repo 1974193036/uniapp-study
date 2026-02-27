@@ -38,6 +38,12 @@
 				"navigationBarTitleText": "用户登录",
 				"enablePullDownRefresh": false
 			}
+		},
+		{
+			"path": "pages/articleDetail/articleDetail",
+			"style": {
+				"navigationBarTitleText": "文章详情"
+			}
 		}
 	],
 	"globalStyle": {

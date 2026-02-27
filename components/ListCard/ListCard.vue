@@ -3,8 +3,7 @@
 		<!-- 基础卡片 -->
 		<view class="list-card" v-if="item.mode==='base'" @click="goArticleDetail">
 			<view class="list-card-img">
-				<image :src="item.cover[0] ? item.cover[0] : '/static/img/logo.png'"
-					mode="aspectFill"></image>
+				<image :src="item.cover[0] ? item.cover[0] : '/static/img/logo.png'" mode="aspectFill"></image>
 			</view>
 			<view class="list-card-content">
 				<view class="list-card-content-title">
@@ -29,9 +28,7 @@
 			</view>
 			<view class="list-card-middle">
 				<view class="image-container" v-for="(img,index) in item.cover.slice(0, 3)" :key="index">
-					<image
-						:src="img"
-						mode="aspectFill"></image>
+					<image :src="img" mode="aspectFill"></image>
 				</view>
 			</view>
 			<view class="list-card-content-desc list-card-bottom">
@@ -74,9 +71,12 @@
 		},
 	})
 	const emit = defineEmits(['saveHistory'])
-	
+
 	function goArticleDetail() {
-		console.log('goArticleDetail')
+		// 跳转到详情界面
+		uni.navigateTo({
+			url: "/pages/articleDetail/articleDetail"
+		})
 		emit('saveHistory')
 	}
 </script>
