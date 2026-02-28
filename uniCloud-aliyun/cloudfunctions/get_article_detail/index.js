@@ -11,6 +11,9 @@ exports.main = async (event, context) => {
 		.match({ // 根据匹配条件进行数据返回
 			_id: article_id
 		})
+		.project({
+			comments: 0 // 本次查询不需要返回comments给前端
+		})
 		.end()
 
 	//返回数据给客户端

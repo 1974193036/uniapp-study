@@ -23,6 +23,15 @@
 			<view class="detail-html">
 				<UParse className="markdown-body" :content="content"></UParse>
 			</view>
+
+			<!-- 评论展示组件 -->
+			<view class="detail-comment">
+				<view class="comment-title">最新评论</view>
+				<view class="comment-content-container" v-for="item in commentList" :key="item.comment_id">
+					<CommentBox :commentData="item"></CommentBox>
+				</view>
+				<view class="no-data" v-if="!commentList.length">暂无评论</view>
+			</view>
 		</view>
 		<!-- 评论组件 -->
 		<view class="detail-bottom">
@@ -70,10 +79,16 @@
 
 	const showPopup = ref(false)
 	const articleData = ref(null)
+	const commentList = ref([])
 
 	onLoad((...options) => {
 		articleData.value = JSON.parse(options[0].params);
+
+		/* 获取文章详情 */
 		getArticleDetail()
+
+		/* 获取评论列表 */
+		getCommentList()
 	})
 
 	const {
@@ -85,6 +100,13 @@
 			article_id: articleData.value._id
 		})
 		articleData.value = data
+	}
+
+	async function getCommentList() {
+		const res = await proxy.$http.get_comments({
+			articleId: articleData.value._id
+		})
+		commentList.value = res
 	}
 
 	const content = computed(() => {

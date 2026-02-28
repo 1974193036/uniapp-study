@@ -66,6 +66,28 @@
 	.detail-html {
 		padding: 0 30rpx;
 	}
+	
+	/* 评论列表样式 */
+	.detail-comment {
+	  margin-top: 60rpx;
+	  .comment-title {
+	    padding: 20rpx 30rpx;
+	    font-size: 28rpx;
+	    color: #666;
+	    border-bottom: 1px solid #ddd;
+	  }
+	  .comment-content-container {
+	    padding: 0 30rpx;
+	    border-bottom: 1px solid #eee;
+	  }
+	  .no-data {
+	    width: 100%;
+	    text-align: center;
+	    padding: 30rpx 0;
+	    color: $c-9;
+	    font-size: 28rpx;
+	  }
+	}
 }
 
 .detail-bottom {
