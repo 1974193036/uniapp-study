@@ -43,7 +43,7 @@ export default {
     wxParseImgLoad(e) {
       const { src } = e.currentTarget.dataset;
       if (!src) return;
-      const { width, height } = e.mp.detail;
+      const { width, height } = e.detail;
       const recal = this.wxAutoImageCal(width, height);
       const { imageheight, imageWidth } = recal;
       const { padding, mode } = this.node.attr;

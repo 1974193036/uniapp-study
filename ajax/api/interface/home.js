@@ -2,13 +2,13 @@ import ajax from '../../http.js'
 
 /* 获取标签列表 */
 export const get_label_list = data => ajax({
-	name:'get_label_list',
+	name: 'get_label_list',
 	data
 })
 
 /* 获取文章列表 */
 export const get_article_list = data => ajax({
-	name:"get_article_list",
+	name: "get_article_list",
 	data,
 	options: {
 		showLoading: false
@@ -17,24 +17,30 @@ export const get_article_list = data => ajax({
 
 /* 修改收藏状态 */
 export const update_save_like = data => ajax({
-  name: 'update_save_like',
-  data
+	name: 'update_save_like',
+	data
 })
 
 /* 获取搜索内容 */
 export const get_search_data = data => ajax({
-  name:'get_search_data',
-  data
+	name: 'get_search_data',
+	data
 })
 
 /* 修改当前显示标签 */
 export const update_label_ids = data => ajax({
-  name:'update_label_ids',
-  data
+	name: 'update_label_ids',
+	data
 })
 
 /* 获取文章详情 */
 export const get_article_detail = data => ajax({
-  name: 'get_article_detail',
-  data
+	name: 'get_article_detail',
+	data
+})
+
+/* 修改文章评论内容 */
+export const update_comment = data => ajax({
+	name: 'update_comment',
+	data
 })

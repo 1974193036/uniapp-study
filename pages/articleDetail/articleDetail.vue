@@ -26,7 +26,7 @@
 		</view>
 		<!-- 评论组件 -->
 		<view class="detail-bottom">
-			<view class="input-container">
+			<view class="input-container" @click="openMaskerComment">
 				<text>谈谈你的看法</text>
 				<uni-icons type="compose" size="16" color="#f07373"></uni-icons>
 			</view>
@@ -42,6 +42,10 @@
 				</view>
 			</view>
 		</view>
+
+		<!-- 评论组件弹窗 -->
+		<CommentMasker @sendCommentData="sendCommentData" @closePopupMasker="showPopup=$event" :showPopup="showPopup">
+		</CommentMasker>
 	</view>
 </template>
 
@@ -54,9 +58,17 @@
 	import {
 		onLoad
 	} from '@dcloudio/uni-app'
-	import { marked } from 'marked'
-	import UParse from  '@/components/u-parse/u-parse.vue'
+	import {
+		marked
+	} from 'marked'
+	import UParse from '@/components/u-parse/u-parse.vue'
+	import {
+		useUserStore
+	} from '@/store/user'
 
+	const userStore = useUserStore()
+
+	const showPopup = ref(false)
 	const articleData = ref(null)
 
 	onLoad((...options) => {
@@ -82,6 +94,26 @@
 			return null
 		}
 	})
+
+	// 打开弹窗遮罩层
+	async function openMaskerComment() {
+		await userStore.checkedIsLogin()
+		showPopup.value = true
+	}
+
+	async function sendCommentData(content) {
+		const {
+			msg
+		} = await proxy.$http.update_comment({
+			articleId: articleData.value._id,
+			userId: userStore.userInfo._id,
+			content
+		})
+		uni.showToast({
+			title: msg,
+		})
+		showPopup.value = false
+	}
 </script>
 
 <style lang="scss" scoped>
