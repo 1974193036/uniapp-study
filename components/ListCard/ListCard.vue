@@ -73,10 +73,27 @@
 	const emit = defineEmits(['saveHistory'])
 
 	function goArticleDetail() {
+		const {
+			_id,
+			title,
+			author,
+			create_time,
+			thumbs_up_count,
+			browse_count
+		} = props.item
+		const params = {
+			_id,
+			title,
+			author,
+			create_time,
+			thumbs_up_count,
+			browse_count
+		};
 		// 跳转到详情界面
 		uni.navigateTo({
-			url: "/pages/articleDetail/articleDetail"
+			url: `/pages/articleDetail/articleDetail?params=${JSON.stringify(params)}`
 		})
+		
 		emit('saveHistory')
 	}
 </script>

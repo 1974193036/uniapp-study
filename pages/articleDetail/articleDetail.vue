@@ -1,27 +1,27 @@
 <template>
 	<view class="article-detail-container">
 		<view class="detail-title">
-			ssr基本介绍以及API的使用
+			{{articleData.title}}
 		</view>
 		<view class="detail-header">
 			<view class="detail-logo">
-				<image src="/static/img/logo.png" mode="aspectFill"></image>
+				<image :src="articleData.author.avatar" mode="aspectFill"></image>
 			</view>
 			<view class="detail-header-content">
 				<view class="detail-header-content-title">
-					WEB讲师
+					{{articleData.author.author_name}}
 				</view>
 				<view class="detail-header-content-info">
-					<text>2020.03.16 17:50</text>
-					<text>173 浏览</text>
-					<text>6 赞</text>
+					<text>{{articleData.create_time}}</text>
+					<text>{{articleData.browse_count}} 浏览</text>
+					<text>{{articleData.thumbs_up_count}} 赞</text>
 				</view>
 			</view>
 			<button type="default" class="detail-header-button">取消关注</button>
 		</view>
 		<view class="detail-content-container">
 			<view class="detail-html">
-				文本内容
+				<UParse className="markdown-body" :content="content"></UParse>
 			</view>
 		</view>
 		<!-- 评论组件 -->
@@ -46,7 +46,42 @@
 </template>
 
 <script setup>
+	import {
+		ref,
+		getCurrentInstance,
+		computed
+	} from 'vue'
+	import {
+		onLoad
+	} from '@dcloudio/uni-app'
+	import { marked } from 'marked'
+	import UParse from  '@/components/u-parse/u-parse.vue'
 
+	const articleData = ref(null)
+
+	onLoad((...options) => {
+		articleData.value = JSON.parse(options[0].params);
+		getArticleDetail()
+	})
+
+	const {
+		proxy
+	} = getCurrentInstance()
+
+	async function getArticleDetail() {
+		const data = await proxy.$http.get_article_detail({
+			article_id: articleData.value._id
+		})
+		articleData.value = data
+	}
+
+	const content = computed(() => {
+		try {
+			return marked(articleData.value.content)
+		} catch (e) {
+			return null
+		}
+	})
 </script>
 
 <style lang="scss" scoped>

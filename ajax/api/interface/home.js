@@ -32,3 +32,9 @@ export const update_label_ids = data => ajax({
   name:'update_label_ids',
   data
 })
+
+/* 获取文章详情 */
+export const get_article_detail = data => ajax({
+  name: 'get_article_detail',
+  data
+})
