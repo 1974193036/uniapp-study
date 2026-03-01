@@ -17,7 +17,9 @@
 					<text>{{articleData.thumbs_up_count}} 赞</text>
 				</view>
 			</view>
-			<button type="default" class="detail-header-button">取消关注</button>
+			<button type="default" class="detail-header-button" @click="followAuthor">
+				{{isFollowAuthor ? '取消关注作者' : '关注作者'}}
+			</button>
 		</view>
 		<view class="detail-content-container">
 			<view class="detail-html">
@@ -44,7 +46,9 @@
 					<uni-icons type="chat" size="22" color="#f07373"></uni-icons>
 				</view>
 				<view class="detail-bottom-icon-box">
-					<uni-icons type="heart" size="22" color="#f07373"></uni-icons>
+					<!-- <uni-icons type="heart" size="22" color="#f07373"></uni-icons> -->
+					<SaveLikes size="22" class="detail-bottom-icon-box" :item="articleData">
+					</SaveLikes>
 				</view>
 				<view class="detail-bottom-icon-box">
 					<uni-icons type="hand-up" size="22" color="#f07373"></uni-icons>
@@ -69,6 +73,9 @@
 		onLoad
 	} from '@dcloudio/uni-app'
 	import {
+		storeToRefs
+	} from 'pinia'
+	import {
 		marked
 	} from 'marked'
 	import UParse from '@/components/u-parse/u-parse.vue'
@@ -77,6 +84,9 @@
 	} from '@/store/user'
 
 	const userStore = useUserStore()
+	const {
+		userInfo
+	} = storeToRefs(userStore)
 
 	const showPopup = ref(false)
 	const articleData = ref({})
@@ -153,14 +163,46 @@
 		// console.log(replyData.value)
 		openMaskerComment()
 	}
-	
+
 	const paddingBottom = ref('14px')
 	onMounted(() => {
-		const { safeAreaInsets } = uni.getWindowInfo()
+		const {
+			safeAreaInsets
+		} = uni.getWindowInfo()
 		if (safeAreaInsets.bottom > 0) {
 			paddingBottom.value = safeAreaInsets.bottom + 'px'
 		}
 	})
+
+	// 是否关注这篇文章的作者
+	const isFollowAuthor = computed(() => {
+		return userInfo.value.id && userInfo.value.author_likes_ids.includes(articleData.value.author.id)
+	})
+
+	/* 关注作者 */
+	async function followAuthor() {
+		// 用户检测
+		await userStore.checkedIsLogin()
+		const {
+			msg
+		} = await proxy.$http.update_follow_author({
+			authorId: articleData.value.author.id,
+			userId: userInfo.value._id
+		})
+		uni.showToast({
+			title: msg,
+		})
+		//处理用户存储信息
+		let followIds = [...userInfo.value.author_likes_ids]
+		if (followIds.includes(articleData.value.author.id)) {
+			followIds = followIds.filter(item => item !== articleData.value.author.id)
+		} else {
+			followIds.push(articleData.value.author.id)
+		}
+		userStore.updateUserInfo({
+			author_likes_ids: followIds
+		})
+	}
 </script>
 
 <style lang="scss" scoped>

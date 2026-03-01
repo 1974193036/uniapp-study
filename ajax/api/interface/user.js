@@ -11,3 +11,9 @@ export const get_code = data => ajax({
   name: "get_code",
   data
 })
+
+/* 关注作者 */
+export const update_follow_author = data => ajax({
+  name: 'update_follow_author',
+  data
+})

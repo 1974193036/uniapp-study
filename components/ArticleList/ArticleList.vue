@@ -36,8 +36,13 @@
 		proxy
 	} = getCurrentInstance()
 
-	watch(() => props.labelList, (val) => {
-		val.length > 0 && getArticleList(props.activeIndex)
+	watch(() => props.labelList, (newVal, oldVal) => {
+		if (newVal.length > 0) {
+			if (JSON.stringify(newVal) === JSON.stringify(oldVal)) return
+			articleData.value = {}
+			loadData.value = {}
+			getArticleList(props.activeIndex)
+		}
 	}, {
 		immediate: true
 	})

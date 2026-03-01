@@ -28,6 +28,10 @@
 				_id: ''
 			})
 		},
+		size: {
+			type: String,
+			default: '20'
+		}
 	})
 
 	const {
@@ -53,7 +57,7 @@
 	}
 
 	const isLike = computed(() => {
-		return userInfo.value &&
+		return userInfo.value.id &&
 			(!!userInfo.value.article_likes_ids?.includes(props.item._id))
 	})
 </script>
