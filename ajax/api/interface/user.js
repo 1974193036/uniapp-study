@@ -17,3 +17,9 @@ export const update_follow_author = data => ajax({
   name: 'update_follow_author',
   data
 })
+
+/* 对当前文章进行点赞 */
+export const update_compliments = data => ajax({
+  name:'update_compliments',
+  data
+})

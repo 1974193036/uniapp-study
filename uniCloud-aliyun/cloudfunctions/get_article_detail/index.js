@@ -1,10 +1,17 @@
 'use strict';
 // 获取数据库的引用
 const db = uniCloud.database()
+// 定义修改指令
+const dbCmd = db.command
 exports.main = async (event, context) => {
 	const {
 		article_id
-	} = event;
+	} = event
+
+	// 每次请求进行+1操作
+	await db.collection('article').update({
+		browse_count: dbCmd.inc(1)
+	})
 
 	const articleList = await db.collection('article')
 		.aggregate() // 使用聚合的形式进行数据的获取

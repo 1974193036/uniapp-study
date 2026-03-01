@@ -16,6 +16,7 @@ const defaultUserInfo = {
 	article_likes_ids: [],
 	label_ids: [],
 	author_likes_ids: [],
+	thumbs_up_article_ids: [],
 }
 
 export const useUserStore = defineStore('user', () => {

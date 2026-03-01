@@ -51,7 +51,8 @@
 					</SaveLikes>
 				</view>
 				<view class="detail-bottom-icon-box">
-					<uni-icons type="hand-up" size="22" color="#f07373"></uni-icons>
+					<uni-icons :type="isCompliments ? 'hand-up-filled' : 'hand-up'" size="22" color="#f07373"
+						@click="updateCompliments"></uni-icons>
 				</view>
 			</view>
 		</view>
@@ -176,7 +177,11 @@
 
 	// 是否关注这篇文章的作者
 	const isFollowAuthor = computed(() => {
-		return userInfo.value.id && userInfo.value.author_likes_ids.includes(articleData.value.author.id)
+		try {
+			return userInfo.value.id && userInfo.value.author_likes_ids.includes(articleData.value.author.id)
+		} catch (e) {
+			return false
+		}
 	})
 
 	/* 关注作者 */
@@ -201,6 +206,45 @@
 		}
 		userStore.updateUserInfo({
 			author_likes_ids: followIds
+		})
+	}
+
+	// 是否显示点赞
+	const isCompliments = computed(() => {
+		try {
+			return userInfo.value.id && userInfo.value.thumbs_up_article_ids.includes(articleData.value._id)
+		} catch (e) {
+			return false
+		}
+	})
+
+	// 更新点赞
+	async function updateCompliments() {
+		// 用户检测
+		await userStore.checkedIsLogin()
+
+		const {
+			msg
+		} = await proxy.$http.update_compliments({
+			articleId: articleData.value._id,
+			userId: userInfo.value._id
+		})
+		msg && uni.showToast({
+			title: msg,
+		})
+		// 修改用户信息
+		let thumbsArr = [...userInfo.value.thumbs_up_article_ids]
+		if (thumbsArr.includes(articleData.value._id)) {
+			// 取消点赞
+			articleData.value.thumbs_up_count -= 1
+			thumbsArr = thumbsArr.filter(item => item !== articleData.value._id)
+		} else {
+			// 增加点赞
+			articleData.value.thumbs_up_count += 1
+			thumbsArr.push(articleData.value._id)
+		}
+		userStore.updateUserInfo({
+			thumbs_up_article_ids: thumbsArr
 		})
 	}
 </script>
