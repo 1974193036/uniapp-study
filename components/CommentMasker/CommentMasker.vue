@@ -1,6 +1,6 @@
 <template>
 	<view>
-		<uni-popup ref="popup" type="bottom" :mask-click="false">
+		<uni-popup ref="popup" type="bottom" background-color="#fff" :mask-click="false">
 			<!-- 内容区域 -->
 			<view class="popup-wrapper">
 				<view class="popup-header">
