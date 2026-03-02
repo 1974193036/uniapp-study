@@ -51,11 +51,21 @@
 		getCurrentInstance
 	} from 'vue'
 	import {
+		onLoad,
+	} from '@dcloudio/uni-app'
+	import {
 		userRules
 	} from '@/utils/formValidate.js'
 	import {
 		useUserStore
 	} from '@/store/user'
+	
+	const navType = ref('')
+	const pageUrl = ref('')
+	onLoad((props) => {
+		navType.value = props.navType
+		pageUrl.value = props.pageUrl
+	})
 
 	const userStore = useUserStore()
 
@@ -121,12 +131,19 @@
 			})
 			setTimeout(() => {
 				// #ifdef H5
-				uni.switchTab({
-					url: '/pages/index/index'
+				uni[navType.value || 'switchTab']({
+					url: pageUrl.value || '/pages/index/index'
 				})
 				// #endif
+				
 				// #ifndef H5
-				uni.navigateBack()
+				if (navType.value && pageUrl.value) {
+					uni[navType.value]({
+						url: pageUrl.value
+					})
+				} else {
+					uni.navigateBack()
+				}
 				// #endif
 			}, 1500)
 		}

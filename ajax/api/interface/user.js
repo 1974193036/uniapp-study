@@ -23,3 +23,21 @@ export const update_compliments = data => ajax({
   name:'update_compliments',
   data
 })
+
+/* 获取关注的文章 */
+export const get_follow_article = (data, options) => ajax({
+  name:'get_follow_article',
+  data,
+	options: {
+		showLoading: options.showLoading
+	}
+})
+
+/* 获取关注作者列表 */
+export const get_follow_author = (data, options) => ajax({
+  name:'get_follow_author',
+  data,
+	options: {
+		showLoading: options.showLoading
+	}
+})

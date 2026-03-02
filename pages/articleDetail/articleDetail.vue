@@ -207,6 +207,7 @@
 		userStore.updateUserInfo({
 			author_likes_ids: followIds
 		})
+		uni.$emit('updateAuthor')
 	}
 
 	// 是否显示点赞

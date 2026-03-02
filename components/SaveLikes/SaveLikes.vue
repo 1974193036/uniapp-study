@@ -54,6 +54,8 @@
 			icon: 'none'
 		})
 		userStore.updateUserInfo(newUserInfo)
+		// 触发followarticle界面从新进行列表数据获取
+		uni.$emit('updateArticle')
 	}
 
 	const isLike = computed(() => {
