@@ -44,6 +44,12 @@
 			"style": {
 				"navigationBarTitleText": "文章详情"
 			}
+		},
+		{
+			"path": "pages/commentList/commentList",
+			"style": {
+				"navigationBarTitleText": "评论列表"
+			}
 		}
 	],
 	"globalStyle": {

@@ -23,7 +23,7 @@
 		</view>
 		<view class="detail-content-container">
 			<view class="detail-html">
-				<UParse className="markdown-body" :content="content"></UParse>
+				<UParse className="markdown-body" no-data="数据加载中..." :content="content"></UParse>
 			</view>
 
 			<!-- 评论展示组件 -->
@@ -42,7 +42,7 @@
 				<uni-icons type="compose" size="16" color="#f07373"></uni-icons>
 			</view>
 			<view class="detail-bottom-icons">
-				<view class="detail-bottom-icon-box">
+				<view class="detail-bottom-icon-box" @click="goCommentPage">
 					<uni-icons type="chat" size="22" color="#f07373"></uni-icons>
 				</view>
 				<view class="detail-bottom-icon-box">
@@ -245,6 +245,13 @@
 		}
 		userStore.updateUserInfo({
 			thumbs_up_article_ids: thumbsArr
+		})
+	}
+
+	// 跳转到评论列表界面
+	function goCommentPage() {
+		uni.navigateTo({
+			url: `/pages/commentList/commentList?articleId=${articleData.value._id}`
 		})
 	}
 </script>
