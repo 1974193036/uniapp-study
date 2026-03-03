@@ -50,6 +50,12 @@
 			"style": {
 				"navigationBarTitleText": "评论列表"
 			}
+		},
+		{
+			"path": "pages/myArticle/myArticle",
+			"style": {
+				"navigationBarTitleText": "我的文章"
+			}
 		}
 	],
 	"globalStyle": {

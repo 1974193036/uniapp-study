@@ -41,3 +41,10 @@ export const get_follow_author = (data, options) => ajax({
 		showLoading: options.showLoading
 	}
 })
+
+
+/* 获取作者自己的文章 */
+export const get_my_article = data => ajax({
+  name:'get_my_article',
+  data
+})
