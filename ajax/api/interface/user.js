@@ -48,3 +48,15 @@ export const get_my_article = data => ajax({
   name:'get_my_article',
   data
 })
+
+/* 用户意见反馈上传 */
+export const update_feedback = data => ajax({
+  name:'update_feedback',
+  data
+})
+
+/* 用户头像修改 */
+export const update_user_avatar = data => ajax({
+  name:'update_user_avatar',
+  data
+})

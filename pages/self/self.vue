@@ -6,7 +6,7 @@
 				<image :src="userInfo.avatar" mode="aspectFill"></image>
 			</view>
 			<view class="my-header-logo">
-				<view class="my-header-logo-box">
+				<view class="my-header-logo-box" @click="changeAvatar">
 					<image :src="userInfo.avatar" mode="aspectFill"></image>
 				</view>
 				<text class="user-name">
@@ -45,7 +45,7 @@
 				<uni-icons type="arrowright" size="14" color="#666"></uni-icons>
 			</view>
 			<view class="my-content-list">
-				<view class="my-content-list-title">
+				<view class="my-content-list-title" @click="goFeedbackPage">
 					<uni-icons class="icons" type="help" size="16" color="#666"></uni-icons>
 					<text>意见反馈</text>
 				</view>
@@ -185,10 +185,54 @@
 				duration: 1500,
 				icon: 'none'
 			});
-			return 
+			return
 		}
 		uni.navigateTo({
 			url: '/pages/myArticle/myArticle'
+		})
+	}
+
+	// 跳转到意见反馈界面
+	function goFeedbackPage() {
+		uni.navigateTo({
+			url: '/pages/feedback/feedback'
+		})
+	}
+
+	// 修改用户图片
+	function changeAvatar() {
+		uni.chooseImage({
+			count: 1,
+			success: async res => {
+				const filePath = await uploadFile(res.tempFilePaths[0], res.tempFiles[0].name)
+				await updateUserAvatar(filePath)
+			}
+		})
+	}
+	async function uploadFile(filePath, cloudPath) {
+		const {
+			fileID
+		} = await uniCloud.uploadFile({
+			filePath,
+			cloudPath
+		})
+		return fileID
+	}
+
+	// 上传图片内容
+	async function updateUserAvatar(filePath) {
+		const {
+			msg
+		} = await proxy.$http.update_user_avatar({
+			userId: userInfo.value._id,
+			filePath,
+		})
+		uni.showToast({
+			title: msg,
+			icon: 'none'
+		})
+		userStore.updateUserInfo({
+			avatar: filePath
 		})
 	}
 </script>
