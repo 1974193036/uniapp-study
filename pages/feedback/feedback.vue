@@ -57,13 +57,18 @@
 		uni.chooseImage({
 			count,
 			success: res => {
-				// console.log(res)
+				console.log(res)
 				const tempFilePaths = res.tempFilePaths
 				tempFilePaths.forEach((url, index) => {
 					if (index < count) {
 						imageList.value.push({
 							url,
-							name: res.tempFiles[index].name
+							// #ifdef H5
+							name: res.tempFiles[index].name,
+							// #endif
+							// #ifndef H5
+							name: Date.now().toString() + url.substr(url.lastIndexOf('.')) // 时间戳 + 获取扩展名
+							// #endif
 						})
 					}
 				})
@@ -80,7 +85,7 @@
 	const {
 		proxy
 	} = getCurrentInstance()
-	
+
 	async function submitFeedback() {
 		if (!content.value) {
 			uni.showToast({

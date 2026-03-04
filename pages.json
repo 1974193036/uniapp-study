@@ -66,7 +66,7 @@
 	],
 	"globalStyle": {
 		"navigationBarTextStyle": "white",
-		"navigationBarTitleText": "uni-app",
+		"navigationBarTitleText": "脱发俱乐部",
 		"navigationBarBackgroundColor": "#f25037",
 		"backgroundColor": "#F8F8F8"
 	},

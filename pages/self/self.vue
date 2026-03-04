@@ -204,7 +204,11 @@
 		uni.chooseImage({
 			count: 1,
 			success: async res => {
-				const filePath = await uploadFile(res.tempFilePaths[0], res.tempFiles[0].name)
+				const filePath = await uploadFile(
+					res.tempFilePaths[0],
+					res.tempFiles[0].name ||
+					Date.now().toString() + res.tempFilePaths[0].substr(res.tempFilePaths[0]
+						.lastIndexOf('.')))
 				await updateUserAvatar(filePath)
 			}
 		})

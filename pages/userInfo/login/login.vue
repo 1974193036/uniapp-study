@@ -131,16 +131,28 @@
 			})
 			setTimeout(() => {
 				// #ifdef H5
-				uni[navType.value || 'switchTab']({
-					url: pageUrl.value || '/pages/index/index'
-				})
+				if (navType.value === 'switchTab') {
+					uni.switchTab({
+						url: pageUrl.value || '/pages/index/index'
+					})
+				} else {
+					uni.navigateTo({
+						url: pageUrl.value || '/pages/index/index'
+					})
+				}
 				// #endif
 				
 				// #ifndef H5
 				if (navType.value && pageUrl.value) {
-					uni[navType.value]({
-						url: pageUrl.value
-					})
+					if (navType.value === 'switchTab') {
+						uni.switchTab({
+							url: pageUrl.value
+						})
+					} else {
+						uni.navigateTo({
+							url: pageUrl.value
+						})
+					}
 				} else {
 					uni.navigateBack()
 				}
